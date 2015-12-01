@@ -10,7 +10,8 @@
     function <%= featureSingularName %>($resource, API_BASE_URL) {
 
         var params = {
-            <%= camelizedSingularName %>Id: '@id'
+            <%= camelizedSingularName %>Id: '@id',
+            format: 'json'
         };
 
         var actions = {
@@ -19,7 +20,7 @@
             }
         };
 
-        var API_URL = API_BASE_URL + '/<%= camelizedSingularName %>/:<%= camelizedSingularName %>Id';
+        var API_URL = API_BASE_URL + '/<%= camelizedPluralName %>/:<%= camelizedSingularName %>Id';
 
         return $resource(API_URL, params, actions);
 
