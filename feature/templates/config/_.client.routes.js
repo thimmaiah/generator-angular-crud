@@ -14,7 +14,7 @@
     function getStates() {
         return [
             {
-                state: 'list<%= featureSingularName %>',
+                state: 'app.list<%= featureSingularName %>',
                 config: {
                     url: '/<%= slugifiedName %>',
                     templateUrl: 'app/<%= slugifiedName %>/views/list.html',
@@ -28,7 +28,7 @@
                 }
             },
             {
-                state: 'create<%= featureSingularName %>',
+                state: 'app.create<%= featureSingularName %>',
                 config: {
                     url: '/<%= slugifiedName %>/create',
                     templateUrl: 'app/<%= slugifiedName %>/views/create.html',
@@ -38,7 +38,7 @@
                 }
             },
             {
-                state: 'view<%= featureSingularName %>',
+                state: 'app.view<%= featureSingularName %>',
                 config: {
                     url: '/<%= slugifiedName %>/:<%= camelizedSingularName %>Id',
                     templateUrl: 'app/<%= slugifiedName %>/views/view.html',
@@ -48,7 +48,7 @@
                 }
             },
             {
-                state: 'edit<%= featureSingularName %>',
+                state: 'app.edit<%= featureSingularName %>',
                 config: {
                     url: '/<%= slugifiedName %>/:<%= camelizedSingularName %>Id/edit',
                     templateUrl: 'app/<%= slugifiedName %>/views/edit.html',
