@@ -10,23 +10,20 @@
         var getFormFields = function(disabled) {
 
             var fields = [
-                {
-                    key: 'name',
-                    type: 'input',
-                    templateOptions: {
-                        label: 'Name:',
-                        disabled: disabled,
-                        required: true
-                    }
-                },
-                {
-                    key: 'address',
-                    type: 'input',
-                    templateOptions: {
-                        label: 'Address:',
-                        disabled: disabled
-                    }
-                }
+
+                <% var fieldLength = 0; for (var f in fieldMap) { %> 
+	            {
+	                key: '<%= f %>',
+	                type: 'input',
+	                templateOptions: {
+	                    label: '<%= f.capitalize() %>:',
+	                    disabled: disabled,
+	                    required: true,
+	                    type: <%= fieldMap[f] %>
+	                }
+	            },
+	            <% fieldLength = fieldLength + 1;} %>
+
             ];
 
             return fields;

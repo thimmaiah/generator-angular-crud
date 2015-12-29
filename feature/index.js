@@ -11,9 +11,26 @@ module.exports = yeoman.generators.Base.extend({
   constructor: function () {
 
     yeoman.generators.Base.apply(this, arguments);
+    
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
 
     this.argument('featureName', { type: String, required: true });
-
+    this.argument('fields', { type: String, required: false });
+	if(this.fields) {
+		// Ensure fields are captured to generate the fields inside the Table/Model
+		this.fields = this.fields.replace(/\s/g, "");
+		var f = this.fields.split(",");
+		this.fieldMap = {};
+		for (var i in f) {
+			var temp = f[i].split(":");
+			this.fieldMap[temp[0]] = temp[1];
+		}
+		console.log(this.fieldMap);
+		
+	}
+	
     this.featureName = _.capitalize(this.featureName);
     this.featureSingularName = inflections.singularize(this.featureName);
     this.featurePluralName = inflections.pluralize(this.featureName);

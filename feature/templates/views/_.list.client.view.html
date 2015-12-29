@@ -14,8 +14,10 @@
 
       <table ng-table="vm.tableParams" show-filter="true" class="table table-condensed table-striped">
           <tr ng-repeat="<%= camelizedSingularName %> in $data">
-              <td data-title="'Name'" sortable="'name'" filter="{ 'name': 'text' }">{{<%= camelizedSingularName %>.name}}</td>
-              <td data-title="'Address'" sortable="'address'" filter="{'address': 'text'}">{{<%= camelizedSingularName %>.address}}</td>
+          <% var fieldLength = 0; for (var f in fieldMap) { %> 
+          	<td data-title="'<%= f.capitalize() %>'" sortable="'<%= f %>'" filter="{ '<%= f %>': 'text' }">{{<%= camelizedSingularName %>.<%= f %>}}</td>
+          <% fieldLength = fieldLength + 1;} %>
+   
               <td>
                  <div class="table-actions">
                       <a class="btn btn-default" title="View" ui-sref="app.view<%= featureSingularName %>({<%= camelizedSingularName %>Id: <%= camelizedSingularName %>.id})">
