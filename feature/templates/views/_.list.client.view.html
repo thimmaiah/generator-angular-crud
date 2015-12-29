@@ -7,7 +7,7 @@
     <div class="panel-body">
 
       <div class="pull-right">
-        <a type="button" class="btn btn-success" href="/<%= slugifiedName %>/create">
+        <a type="button" class="btn btn-success" ui-sref="app.create<%= featureSingularName %>()">
           <i class="glyphicon glyphicon-open"></i> New <%= featureSingularName %>
         </a>
       </div>
@@ -18,10 +18,10 @@
               <td data-title="'Address'" sortable="'address'" filter="{'address': 'text'}">{{<%= camelizedSingularName %>.address}}</td>
               <td>
                  <div class="table-actions">
-                      <a class="btn btn-default" title="View" href="/<%= slugifiedName %>/{{<%= camelizedSingularName %>.id}}">
+                      <a class="btn btn-default" title="View" ui-sref="app.view<%= featureSingularName %>({<%= camelizedSingularName %>Id: <%= camelizedSingularName %>.id})">
                         <span class="glyphicon glyphicon-eye-open"></span>
                       </a>
-                      <a class="btn btn-default" title="Edit" href="/<%= slugifiedName %>/{{<%= camelizedSingularName %>.id}}/edit">
+                      <a class="btn btn-default" title="Edit" ui-sref="app.edit<%= featureSingularName %>({<%= camelizedSingularName %>Id: <%= camelizedSingularName %>.id})">
                         <span class="glyphicon glyphicon-edit"></span>
                       </a>
                       <a class="btn btn-danger" title="Remove" ng-really-message="Are you sure ?" ng-really-click="vm.remove(<%= camelizedSingularName %>)" item="<%= camelizedSingularName %>">

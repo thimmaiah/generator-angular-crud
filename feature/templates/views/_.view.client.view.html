@@ -13,13 +13,13 @@
 
       <hr/>
       <div>
-        <a class="btn btn-success" href="/<%= slugifiedName %>/{{vm.<%= camelizedSingularName %>.id}}/edit">
+        <a class="btn btn-success" ui-sref="app.edit<%= featureSingularName %>({<%= camelizedSingularName %>Id: vm.<%= camelizedSingularName %>.id})">
           <i class="glyphicon glyphicon-edit"></i> Edit
         </a>
         <a class="btn btn-danger" title="Remove" ng-really-message="Are you sure ?" ng-really-click="vm.remove()" item="vm.<%= camelizedSingularName %>">
           <i class="glyphicon glyphicon-remove-circle"></i> Delete
         </a>
-        <a class="btn btn-primary" href="/<%= slugifiedName %>">
+        <a class="btn btn-primary" ui-sref="app.list<%= featureSingularName %>()">
           <i class="glyphicon glyphicon-list"></i> List <%= featurePluralName %>
         </a>
       </div>
