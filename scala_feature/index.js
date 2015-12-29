@@ -17,6 +17,21 @@ module.exports = yeoman.generators.Base.extend({
     
     if(this.options.feature) {
     	this.argument('featureName', { type: String, required: true });
+    	this.argument('packageName', { type: String, required: true });
+    	this.argument('fields', { type: String, required: false });
+    	if(this.fields) {
+    		// Ensure fields are captured to generate the fields inside the Table/Model
+    		this.fields = this.fields.replace(/\s/g, "");
+    		var f = this.fields.split(",");
+    		this.fieldMap = {};
+    		for (var i in f) {
+    			var temp = f[i].split(":");
+    			this.fieldMap[temp[0]] = temp[1];
+    		}
+    		console.log(this.fieldMap);
+    		
+    	}
+        
         
 	    this.featureName = _.capitalize(this.featureName);
 	    this.featureSingularName = inflections.singularize(this.featureName);
@@ -26,13 +41,15 @@ module.exports = yeoman.generators.Base.extend({
 	    this.camelizedPluralName = _.camelCase(this.featurePluralName);
     }
     
-    if(this.options.app || this.options.feature) {
+    if(this.options.app) {
     	this.argument('packageName', { type: String, required: true });
-    	this.outFolder = "src/main/scala/" + this.packageName.replace(/\./g, "/");
-    	if(this.options.feature) {
-    		this.outFolder = this.outFolder + "/" + this.slugifiedName
-    	}
     }
+    
+	this.outFolder = "src/main/scala/" + this.packageName.replace(/\./g, "/");
+	if(this.options.feature) {
+		this.outFolder = this.outFolder + "/" + this.slugifiedName
+	}
+    
 
   },
 
@@ -47,6 +64,7 @@ module.exports = yeoman.generators.Base.extend({
 
   featureFiles: function () {
     
+	  
     if(this.options.app) {
     	// Render the app files - contains all base classes and bootup stuff
 	    this.template('base/BaseService.scala', this.outFolder + "/base/BaseService.scala");
