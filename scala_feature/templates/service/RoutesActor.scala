@@ -23,7 +23,7 @@ class <%= featureName %>RoutesActor(modules: Configuration with PersistenceModul
   implicit val timeout = Timeout(5.seconds)
 
   def receive = runRoute(
-        respondWithCORS(conf.getString("origin.domain")) { <%= featureName %>Service.endpoints ~ <%= featureName %>Service.endpoints })
+        respondWithCORS(conf.getString("origin.domain")) { <%= featureName %>Service.endpoints })
 }
 
 

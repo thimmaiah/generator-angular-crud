@@ -12,24 +12,31 @@ module.exports = yeoman.generators.Base.extend({
 
     yeoman.generators.Base.apply(this, arguments);
 
-    this.argument('featureName', { type: String, required: true });
-    this.argument('packageName', { type: String, required: true });
-
-    this.featureName = _.capitalize(this.featureName);
-    this.featureSingularName = inflections.singularize(this.featureName);
-    this.featurePluralName = inflections.pluralize(this.featureName);
-
-    this.slugifiedName = _.kebabCase(this.featureName);
-
-  	this.camelizedSingularName = _.camelCase(this.featureSingularName);
-    this.camelizedPluralName = _.camelCase(this.featurePluralName);
+    this.option('feature');
+    this.option('app');
+    
+    if(this.options.feature) {
+    	this.argument('featureName', { type: String, required: true });
+        
+	    this.featureName = _.capitalize(this.featureName);
+	    this.featureSingularName = inflections.singularize(this.featureName);
+	    this.featurePluralName = inflections.pluralize(this.featureName);
+	    this.slugifiedName = _.kebabCase(this.featureName);
+	  	this.camelizedSingularName = _.camelCase(this.featureSingularName);
+	    this.camelizedPluralName = _.camelCase(this.featurePluralName);
+    }
+    
+    if(this.options.app || this.options.feature) {
+    	this.argument('packageName', { type: String, required: true });
+    	this.outFolder = "scala/" + this.packageName.replace(/\./g, "/");
+    }
 
   },
 
   prompting: function () {
 
     this.log(yosay(
-      'Adding a new scala feature!'
+      '--feature: yo angular-crud:scala_feature Trade your.package.name --feature \n --app: yo angular-crud:scala_feature your.package.name --app'
     ));
 
   },
@@ -37,17 +44,22 @@ module.exports = yeoman.generators.Base.extend({
 
   featureFiles: function () {
     
-    var outFolder = "scala/" + this.packageName.replace(".", "/");
+    if(this.options.app) {
+    	// Render the app files - contains all base classes and bootup stuff
+	    this.template('base/BaseService.scala', this.outFolder + "/base/BaseService.scala");
+	    this.template('base/StaticService.scala', this.outFolder + "/base/StaticService.scala");
+	    this.template('base/RoutesActor.scala', this.outFolder + "/base/RoutesActor.scala");
+	    this.template('base/TokenAuthenticator.scala', this.outFolder + "/base/TokenAuthenticator.scala");
+	    this.template('boot/Boot.scala', this.outFolder + "/boot/Boot.scala");
+    }
     
-    // Render angular module files
-    this.template('base/BaseService.scala', outFolder + "/base/BaseService.scala");
-    this.template('base/StaticService.scala', outFolder + "/base/StaticService.scala");
-    
-    this.template('dao/Dao.scala', outFolder + "/dao/" + this.featureName + "Dao.scala");
-    this.template('model/Model.scala', outFolder + "/model/" + this.featureName + ".scala");
-    
-    this.template('service/Service.scala', outFolder + "/service/" + this.featureName + "Service.scala");
-    this.template('service/RoutesActor.scala', outFolder + "/service/" + this.featureName + "RoutesActor.scala");
+    if(this.options.feature) {
+    	// Render the actual feature
+	    this.template('dao/Dao.scala', this.outFolder + "/dao/" + this.featureName + "Dao.scala");
+	    this.template('model/Model.scala', this.outFolder + "/model/" + this.featureName + ".scala");    
+	    this.template('service/Service.scala', this.outFolder + "/service/" + this.featureName + "Service.scala");
+	    this.template('service/RoutesActor.scala', this.outFolder + "/service/" + this.featureName + "RoutesActor.scala");
+    }
 
   }
 

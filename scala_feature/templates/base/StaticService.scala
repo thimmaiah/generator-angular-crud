@@ -1,4 +1,4 @@
-package <%= camelizedSingularName %>
+package <%= packageName %>
 
 import spray.routing.HttpService
 import com.typesafe.config.ConfigFactory
