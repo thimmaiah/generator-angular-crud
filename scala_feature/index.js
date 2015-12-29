@@ -28,7 +28,10 @@ module.exports = yeoman.generators.Base.extend({
     
     if(this.options.app || this.options.feature) {
     	this.argument('packageName', { type: String, required: true });
-    	this.outFolder = "scala/" + this.packageName.replace(/\./g, "/");
+    	this.outFolder = "src/main/scala/" + this.packageName.replace(/\./g, "/");
+    	if(this.options.feature) {
+    		this.outFolder = this.outFolder + "/" + this.slugifiedName
+    	}
     }
 
   },
@@ -51,6 +54,9 @@ module.exports = yeoman.generators.Base.extend({
 	    this.template('base/RoutesActor.scala', this.outFolder + "/base/RoutesActor.scala");
 	    this.template('base/TokenAuthenticator.scala', this.outFolder + "/base/TokenAuthenticator.scala");
 	    this.template('boot/Boot.scala', this.outFolder + "/boot/Boot.scala");
+	    this.template('utils/CorsSupport.scala', this.outFolder + "/utils/CorsSupport.scala");
+	    this.template('utils/CustomJson.scala', this.outFolder + "/utils/CustomJson.scala");
+	    this.template('utils/DB.scala', this.outFolder + "/utils/DB.scala");
     }
     
     if(this.options.feature) {

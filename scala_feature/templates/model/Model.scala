@@ -1,4 +1,4 @@
-package <%= packageName %>.<%= camelizedSingularName %>manager.model
+package <%= packageName %>.<%= camelizedSingularName %>.model
 
 import java.sql.Date
 import slick.driver.MySQLDriver.api._
@@ -11,19 +11,18 @@ import spray.json.JsString
 import spray.json.JsValue
 import spray.json.DeserializationException
 import org.joda.time.format.ISODateTimeFormat
-import java.sql.Timestamp
 
-
-case class <%= featureName %>(id: Option[Int])
+case class <%= featureName %>(id: Option[Long], created_at: Option[DateTime], updated_at: Option[DateTime])
 
 class <%= featureName %>Table(tag: Tag) extends Table[<%= featureName %>](tag, "ORDERS") {
-  def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def created_at = column[DateTime]("created_at")
   def updated_at = column[DateTime]("updated_at")
-  def * = (id.?, created_at, updated_at) <> (<%= featureName %>.tupled, <%= featureName %>.unapply)
+  def * = (id.?, created_at.?, updated_at.?) <> (<%= featureName %>.tupled, <%= featureName %>.unapply)
 }
 
 object <%= featureName %>JsonProtocol extends DefaultJsonProtocol {
-  implicit val <%= camelizedSingularName %>Format = jsonFormat1(<%= featureName %>)
+  import <%= packageName %>.utils.CustomJson._
+  implicit val <%= camelizedSingularName %>Format = jsonFormat3(<%= featureName %>)
 }
 

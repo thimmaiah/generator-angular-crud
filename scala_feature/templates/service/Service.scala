@@ -5,9 +5,9 @@ import <%= packageName %>.<%= camelizedSingularName %>.dao.<%= featureName %>Dao
 import <%= packageName %>.<%= camelizedSingularName %>.model.<%= featureName %>
 import <%= packageName %>.<%= camelizedSingularName %>.model.<%= featureName %>JsonProtocol
 import scala.concurrent.ExecutionContext.Implicits.global
-import utils.CORSSupport
 
-object <%= featureName %>Service extends BaseService with CORSSupport {
+
+object <%= featureName %>Service extends BaseService {
 
   import <%= packageName %>.<%= camelizedSingularName %>.model.<%= featureName %>JsonProtocol._
   import <%= packageName %>.Json4sProtocol._
