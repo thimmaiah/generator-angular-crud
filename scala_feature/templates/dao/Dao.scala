@@ -18,14 +18,14 @@ object <%= featureName %>Dao extends TableQuery(new <%= featureName %>Table(_)) 
    * Saves the <%= featureName %> to the DB
    * @return The Id of the saved entity
    */
-  def save(<%= camelizedSingularName %>: <%= featureName %>): Future[Int] = {
-    // Update the timestamps
-    val now = new DateTime();
-    val new_<%= camelizedSingularName %>: <%=featureName%> = <%= camelizedSingularName %>.copy(created_at = Some(now), updated_at = Some(now))
-    
-    db.run(this += new_<%= camelizedSingularName %>).mapTo[Int] 
+  
+  val insertQuery = this returning this.map(_.id) into ((<%= camelizedSingularName %>, id) => <%= camelizedSingularName %>.copy(id = Some(id)))
+  
+  def save(<%= camelizedSingularName %>: <%= featureName %>) : Future[<%= featureName %>] = {
+    val action = insertQuery += <%= camelizedSingularName %>
+    db.run(action)
   }
-
+  
   /**
    * Returns the <%= featureName %> 
    * @id The id of the <%= featureName %> in the DB

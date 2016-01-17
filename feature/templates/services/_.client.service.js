@@ -1,3 +1,4 @@
+// The resource used to interact with the REST service
 (function() {
     'use strict';
 
@@ -17,6 +18,9 @@
         var actions = {
             update: {
                 method: 'PUT'
+            },
+            delete: {
+                method: 'DELETE'
             }
         };
 

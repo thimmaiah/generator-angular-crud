@@ -9,7 +9,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object <%= featureName %>Service extends BaseService {
 
-  import <%= packageName %>.<%= camelizedSingularName %>.model.<%= featureName %>JsonProtocol._
   import <%= packageName %>.Json4sProtocol._
 
   val dao = <%= featureName %>Dao

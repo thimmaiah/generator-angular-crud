@@ -1,3 +1,4 @@
+// The routes for <%= camelizedSingularName %>
 (function() {
     'use strict';
 
