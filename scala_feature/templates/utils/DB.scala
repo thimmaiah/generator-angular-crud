@@ -12,3 +12,12 @@ object DB {
 	implicit val profile: JdbcProfile = dbConfig.driver
 	implicit val db: JdbcProfile#Backend#Database = dbConfig.db
 }
+
+object CustomDBColMappers {
+
+  implicit def dateTimeMapper = MappedColumnType.base[DateTime, Timestamp] (
+    { dateTime => new Timestamp(dateTime.getMillis) },
+    { date => new DateTime(date) }
+  )
+
+}

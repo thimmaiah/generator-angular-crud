@@ -6,29 +6,46 @@ import <%= packageName %>.<%= camelizedSingularName %>.model.<%= featureName %>
 import <%= packageName %>.<%= camelizedSingularName %>.model.<%= featureName %>JsonProtocol
 import scala.concurrent.ExecutionContext.Implicits.global
 
-
+/**
+ * The service that provides the REST interface for <%= featureName %> 
+ */
 object <%= featureName %>Service extends BaseService {
-
+  
+  /**
+   * For JSON serialization/deserialization
+   */
   import <%= packageName %>.Json4sProtocol._
 
+  /**
+   * The DAO for DB access to <%= featureName %>
+   */
   val dao = <%= featureName %>Dao
 
+  /**
+   * Returns the list of <%= camelizedPluralName %>
+   */
   val list = getJson {
-    path("<%= camelizedSingularName %>s") {
+    path("<%= camelizedPluralName %>") {
       complete(dao.list)
     }
   }
 
+  /**
+   * Returns a specific <%= camelizedSingularName %> identified by the id
+   */
   val details = getJson {
-    path("<%= camelizedSingularName %>s" / IntNumber) { id =>
+    path("<%= camelizedPluralName %>" / IntNumber) { id =>
       {
         complete(dao.get(id))
       }
     }
   }
 
+  /**
+   * Creates a new <%= camelizedSingularName %>
+   */
   val create = postJson {
-    path("<%= camelizedSingularName %>s") {
+    path("<%= camelizedPluralName %>") {
       entity(as[<%= featureName %>]) { <%= camelizedSingularName %> =>
         {
           complete(dao.save(<%= camelizedSingularName %>))
@@ -36,8 +53,12 @@ object <%= featureName %>Service extends BaseService {
       }
     }
   }
+  
+  /**
+   * Updates an existing <%= camelizedSingularName %> identified by the id
+   */
   val update = putJson {
-    path("<%= camelizedSingularName %>s" / IntNumber) { id =>
+    path("<%= camelizedPluralName %>" / IntNumber) { id =>
       entity(as[<%= featureName %>]) { <%= camelizedSingularName %> =>
         {
           complete(dao.update(<%= camelizedSingularName %>))
@@ -45,14 +66,21 @@ object <%= featureName %>Service extends BaseService {
       }
     }
   }
+  
+  /**
+   * Deletes the <%= camelizedSingularName %> identified by the id
+   */
   val destroy = deleteJson {
-    path("<%= camelizedSingularName %>s" / IntNumber) { id =>
+    path("<%= camelizedPluralName %>" / IntNumber) { id =>
 
       complete(dao.delete(id))
 
     }
   }
 
+  /**
+   * The list of methods which are exposed as the endpoint for this service
+   */
   val endpoints =
     list ~ details ~ create ~ update ~ destroy
 

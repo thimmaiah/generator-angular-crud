@@ -14,7 +14,10 @@ module.exports = yeoman.generators.Base.extend({
 
     this.option('feature');
     this.option('app');
-    
+
+    /*   yo angular-crud:scala_feature --app
+     *  yo angular-crud:scala_feature Position com.lot ticker:String,security_id:Long,quantity:Double,average_price:Double,pnl:Double --feature
+     */
     if(this.options.feature) {
     	this.argument('featureName', { type: String, required: true });
     	this.argument('packageName', { type: String, required: true });

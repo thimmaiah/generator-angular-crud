@@ -13,20 +13,44 @@ import spray.json.DeserializationException
 import org.joda.time.format.ISODateTimeFormat
 import <%= packageName %>.utils.CustomJson
 
+/**
+ * The model class
+ */
 case class <%= featureName %>(id: Option[Long],
    <% var fieldLength = 0; for (var f in fieldMap) { %> <%= f %>: <%= fieldMap[f] %>, <% fieldLength = fieldLength + 1;} %>
     created_at: Option[DateTime], 
     updated_at: Option[DateTime])
 
+/**
+ * The DB schema
+ */
 class <%= featureName %>Table(tag: Tag) extends Table[<%= featureName %>](tag, "<%= camelizedPluralName %>") {
+  /*
+   * Auto inc primary key
+   */
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-  def created_at = column[DateTime]("created_at")
-  def updated_at = column[DateTime]("updated_at")
+  /*
+   * Updated automatically by the DAO on save
+   */
+  def created_at = column[Option[DateTime]]("created_at")
+  /*
+   * Updated automatically by the DAO on update
+   */
+  def updated_at = column[Option[DateTime]]("updated_at")
+  /*
+   * The rest of the domain specific fields
+   */
  <% for (var f in fieldMap) { %> def <%= f %> = column[<%= fieldMap[f] %>]("<%=f%>") 
  <% } %>
-  def * = (id.?, <% for (var f in fieldMap) { %> <%= f %>, <% } %> created_at.?, updated_at.?) <> (<%= featureName %>.tupled, <%= featureName %>.unapply)
+ /*
+  * Projection betw the DB and the model
+  */
+  def * = (id.?, <% for (var f in fieldMap) { %> <%= f %>, <% } %> created_at, updated_at) <> (<%= featureName %>.tupled, <%= featureName %>.unapply)
 }
 
+/**
+ * The JSON protocol
+ */
 object <%= featureName %>JsonProtocol extends CustomJson {
   implicit val <%= camelizedSingularName %>Format = jsonFormat<%= fieldLength + 3 %>(<%= featureName %>)
 }

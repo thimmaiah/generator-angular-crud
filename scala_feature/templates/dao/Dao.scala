@@ -14,6 +14,8 @@ import org.joda.time.DateTime
 
 object <%= featureName %>Dao extends TableQuery(new <%= featureName %>Table(_)) {
 
+  import com.lot.utils.CustomDBColMappers._
+  
   /**
    * Saves the <%= featureName %> to the DB
    * @return The Id of the saved entity
@@ -22,7 +24,13 @@ object <%= featureName %>Dao extends TableQuery(new <%= featureName %>Table(_)) 
   val insertQuery = this returning this.map(_.id) into ((<%= camelizedSingularName %>, id) => <%= camelizedSingularName %>.copy(id = Some(id)))
   
   def save(<%= camelizedSingularName %>: <%= featureName %>) : Future[<%= featureName %>] = {
-    val action = insertQuery += <%= camelizedSingularName %>
+    /*
+     * Ensure the timestamps are updated
+     */
+    val now = new DateTime()
+    val o: <%= featureName %> = <%= camelizedSingularName %>.copy(created_at = Some(now), updated_at = Some(now))   
+ 
+    val action = insertQuery += o
     db.run(action)
   }
   
@@ -44,6 +52,19 @@ object <%= featureName %>Dao extends TableQuery(new <%= featureName %>Table(_)) 
     val new_<%= camelizedSingularName %>: <%=featureName%> = <%= camelizedSingularName %>.copy(updated_at = Some(now))
     
     db.run(this.filter(_.id === <%= camelizedSingularName %>.id).update(new_<%= camelizedSingularName %>))
+  }
+  
+   /**
+   * Updates the Position
+   * @position The new fields will be updated in the DB but only if 
+   * the updated_at in the DB is the same as the one in the position param 
+   */
+  def updateWithOptimisticLocking( <%= camelizedSingularName %>:  <%= featureName %>) = {
+    // update the updated_at timestamp
+    val now = new DateTime();
+    val new_<%= camelizedSingularName %>:<%= featureName %> =  <%= camelizedSingularName %>.copy(updated_at = Some(now))
+    
+    db.run(this.filter(p=>p.id === <%= camelizedSingularName %>.id && p.updated_at === <%= camelizedSingularName %>.updated_at).update(new_<%= camelizedSingularName %>))
   }
   
   /**
@@ -76,6 +97,13 @@ object <%= featureName %>Dao extends TableQuery(new <%= featureName %>Table(_)) 
   def list = {
     val all<%= featureName %>s = for (o <- this) yield o
     db.run(all<%= featureName %>s.result)
+  }
+
+  /**
+   * Used only for testing to clean the DB after each test
+   */
+  def truncate = {
+    db.run(sqlu"TRUNCATE TABLE <%= camelizedPluralName %>;")
   }
 
 }
