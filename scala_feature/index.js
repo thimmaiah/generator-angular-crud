@@ -40,6 +40,7 @@ module.exports = yeoman.generators.Base.extend({
 	    this.featureSingularName = inflections.singularize(this.featureName);
 	    this.featurePluralName = inflections.pluralize(this.featureName);
 	    this.slugifiedName = _.kebabCase(this.featureName);
+	    this.underscoreName = this.slugifiedName.replace(/-/g, "_");
 	  	this.camelizedSingularName = _.camelCase(this.featureSingularName);
 	    this.camelizedPluralName = _.camelCase(this.featurePluralName);
     }
@@ -50,7 +51,7 @@ module.exports = yeoman.generators.Base.extend({
     
 	this.outFolder = "src/main/scala/" + this.packageName.replace(/\./g, "/");
 	if(this.options.feature) {
-		this.outFolder = this.outFolder + "/" + this.slugifiedName
+		this.outFolder = this.outFolder + "/" + this.underscoreName
 	}
     
 

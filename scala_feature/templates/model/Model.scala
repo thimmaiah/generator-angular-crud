@@ -24,7 +24,7 @@ case class <%= featureName %>(id: Option[Long],
 /**
  * The DB schema
  */
-class <%= featureName %>Table(tag: Tag) extends Table[<%= featureName %>](tag, "<%= camelizedPluralName %>") {
+class <%= featureName %>Table(tag: Tag) extends Table[<%= featureName %>](tag, "<%= underscoreName %>") {
   /*
    * Auto inc primary key
    */
@@ -32,15 +32,15 @@ class <%= featureName %>Table(tag: Tag) extends Table[<%= featureName %>](tag, "
   /*
    * Updated automatically by the DAO on save
    */
-  def created_at = column[Option[DateTime]]("created_at")
+  def created_at = column[Option[DateTime]]("created_at", O.Nullable)
   /*
    * Updated automatically by the DAO on update
    */
-  def updated_at = column[Option[DateTime]]("updated_at")
+  def updated_at = column[Option[DateTime]]("updated_at", O.Nullable)
   /*
    * The rest of the domain specific fields
    */
- <% for (var f in fieldMap) { %> def <%= f %> = column[<%= fieldMap[f] %>]("<%=f%>") 
+ <% for (var f in fieldMap) { %> def <%= f %> = column[<%= fieldMap[f] %>]("<%=f%>", O.Nullable) 
  <% } %>
  /*
   * Projection betw the DB and the model

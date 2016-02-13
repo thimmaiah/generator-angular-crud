@@ -103,7 +103,7 @@ object <%= featureName %>Dao extends TableQuery(new <%= featureName %>Table(_)) 
    * Used only for testing to clean the DB after each test
    */
   def truncate = {
-    db.run(sqlu"TRUNCATE TABLE <%= camelizedPluralName %>;")
+    db.run(sqlu"TRUNCATE TABLE <%= underscoreName %>;")
   }
 
 }
