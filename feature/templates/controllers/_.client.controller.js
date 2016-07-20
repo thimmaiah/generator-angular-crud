@@ -79,15 +79,29 @@
 
         // Ensure form fields are set for view and edit
         vm.toView<%= featureSingularName %> = function() {
-            vm.<%= camelizedSingularName %> = <%= featureSingularName %>.get({<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id});
+            vm.<%= camelizedSingularName %> = <%= featureSingularName %>.get({<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id}, vm.successResponse, vm.errorResponse);
             vm.setFormFields(true);
         };
 
         vm.toEdit<%= featureSingularName %> = function() {
-            vm.<%= camelizedSingularName %> = <%= featureSingularName %>.get({<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id});
+            vm.<%= camelizedSingularName %> = <%= featureSingularName %>.get({<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id}, vm.successResponse, vm.errorResponse);
             vm.setFormFields(false);
         };
 
+		vm.errorResponse = function(response) {
+			// Error
+			if (response.status === 404) {
+				logger.error("Not found");
+			} else if (response.status === 403) {
+				logger.error("No access");
+			} else {
+				logger.error("Error: " + response);
+			}
+		}
+
+		vm.successResponse = function(response) {
+			
+		}
         // Called to initialize the controller
         activate();
 

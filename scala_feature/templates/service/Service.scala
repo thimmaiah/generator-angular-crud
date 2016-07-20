@@ -9,7 +9,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 /**
  * The service that provides the REST interface for <%= featureName %> 
  */
-object <%= featureName %>Service extends BaseService {
+trait <%= featureName %>RestService extends BaseService {
+  
+  val REST_ENDPOINT = "<%= underscoreName %>"
   
   /**
    * For JSON serialization/deserialization
@@ -25,7 +27,7 @@ object <%= featureName %>Service extends BaseService {
    * Returns the list of <%= camelizedPluralName %>
    */
   val list = getJson {
-    path("<%= camelizedPluralName %>") {
+    path(REST_END_POINT) {
       complete(dao.list)
     }
   }
@@ -34,7 +36,7 @@ object <%= featureName %>Service extends BaseService {
    * Returns a specific <%= camelizedSingularName %> identified by the id
    */
   val details = getJson {
-    path("<%= camelizedPluralName %>" / IntNumber) { id =>
+    path(REST_END_POINT / IntNumber) { id =>
       {
         complete(dao.get(id))
       }
@@ -45,7 +47,7 @@ object <%= featureName %>Service extends BaseService {
    * Creates a new <%= camelizedSingularName %>
    */
   val create = postJson {
-    path("<%= camelizedPluralName %>") {
+    path(REST_END_POINT) {
       entity(as[<%= featureName %>]) { <%= camelizedSingularName %> =>
         {
           complete(dao.save(<%= camelizedSingularName %>))
@@ -58,7 +60,7 @@ object <%= featureName %>Service extends BaseService {
    * Updates an existing <%= camelizedSingularName %> identified by the id
    */
   val update = putJson {
-    path("<%= camelizedPluralName %>" / IntNumber) { id =>
+    path(REST_END_POINT) {
       entity(as[<%= featureName %>]) { <%= camelizedSingularName %> =>
         {
           complete(dao.update(<%= camelizedSingularName %>))
@@ -71,7 +73,7 @@ object <%= featureName %>Service extends BaseService {
    * Deletes the <%= camelizedSingularName %> identified by the id
    */
   val destroy = deleteJson {
-    path("<%= camelizedPluralName %>" / IntNumber) { id =>
+    path(REST_END_POINT / IntNumber) { id =>
 
       complete(dao.delete(id))
 
@@ -84,4 +86,8 @@ object <%= featureName %>Service extends BaseService {
   val endpoints =
     list ~ details ~ create ~ update ~ destroy
 
+}
+
+object <%= featureName %>Service extends <%= featureName %>RestService {
+  
 }

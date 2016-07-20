@@ -19,7 +19,7 @@
 	                    label: '<%= f.capitalize() %>:',
 	                    disabled: disabled,
 	                    required: true,
-	                    type: ''<%= fieldMap[f] %>'
+	                    type: '<%= fieldMap[f] %>'
 	                }
 	            },
 	            <% fieldLength = fieldLength + 1;} %>

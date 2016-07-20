@@ -19,7 +19,7 @@ import java.sql.Timestamp
 import utils.CORSSupport
 
 object Json4sProtocol extends Json4sSupport {
-  implicit def json4sFormats: Formats = DefaultFormats DefaultFormats ++ org.json4s.ext.JodaTimeSerializers.all
+  implicit def json4sFormats: Formats = DefaultFormats.lossless ++ org.json4s.ext.JodaTimeSerializers.all
 }
 
 trait BaseService extends SimpleRoutingApp with CORSSupport {
