@@ -1,0 +1,25 @@
+
+<form data-ng-submit="vm.create()" novalidate>
+
+  <div class="list">
+
+   <% var fieldLength = 0; for (var f in fieldMap) { %> 
+   <label class="item item-input item-stacked-label">
+     <span class="input-label"t><%= f.capitalize() %></span>
+     <% if (fieldMap[f] == "select") { %>
+     <select stacked ng-model="vm.<%= camelizedSingularName %>.<%=f%>">
+       <option>Option1</option>
+       <option>Option2</option>
+       <option>Option3</option>
+     </select>
+     <% } else { %>
+     <input type="<%= fieldMap[f] %>" placeholder="Enter <%= f.capitalize() %>" 
+     ng-model="vm.<%= camelizedSingularName %>.<%=f%>">
+     <% } %>
+   </label>
+   <% fieldLength = fieldLength + 1;} %>
+
+ </div>
+
+</form>
+

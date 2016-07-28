@@ -1,0 +1,17 @@
+<ion-view>
+  <ion-nav-title>{{content.title}}</ion-nav-title>
+  <ion-content>
+    <div class="list card">
+      <div class="item item-avatar">
+        
+        <form data-ng-submit="vm.update()" novalidate>
+
+        <div ng-include="'app/<%= camelizedPluralName %>/views/<%= camelizedPluralName %>.form.html'">
+        </div>
+
+        </form>     
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
