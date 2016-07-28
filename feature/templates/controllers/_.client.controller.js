@@ -74,18 +74,27 @@
                 $state.go("app.list<%= camelizedSingularName %>");
             }, function(errorResponse) {
                 vm.error = errorResponse.data.summary;
+                logger.error("Update Error " + errorResponse);
             });
         };
 
         // Ensure form fields are set for view and edit
-        vm.toView<%= featureSingularName %> = function() {
-            vm.<%= camelizedSingularName %> = <%= featureSingularName %>.get({<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id}, vm.successResponse, vm.errorResponse);
-            vm.setFormFields(true);
+        vm.view<%= featureSingularName %> = function() {
+            if($stateParams.<%= camelizedSingularName %>Id) {
+                vm.<%= camelizedSingularName %> = <%= featureSingularName %>.get({<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id}, vm.successResponse, vm.errorResponse);
+                vm.setFormFields(true);
+            } else {
+                console.log("<%= featureSingularName %>Controller: $stateParams.<%= camelizedSingularName %>Id is blank");
+            }
         };
 
-        vm.toEdit<%= featureSingularName %> = function() {
-            vm.<%= camelizedSingularName %> = <%= featureSingularName %>.get({<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id}, vm.successResponse, vm.errorResponse);
-            vm.setFormFields(false);
+        vm.edit<%= featureSingularName %> = function() {
+            if($stateParams.<%= camelizedSingularName %>Id) {
+                vm.<%= camelizedSingularName %> = <%= featureSingularName %>.get({<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id}, vm.successResponse, vm.errorResponse);
+                vm.setFormFields(false);
+            } else {
+                console.log("<%= featureSingularName %>Controller: $stateParams.<%= camelizedSingularName %>Id is blank");
+            }
         };
 
 		vm.errorResponse = function(response) {
@@ -106,7 +115,23 @@
         activate();
 
         function activate() {
-            logger.info('Activated <%= featureSingularName %> View');
+
+            $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+        
+                console.log("<%= featureSingularName %>Controller: $state.name = " + toState.name);
+                // Load data for this route to use
+                switch (toState.name) {
+                    case "app.view<%= featureSingularName %>":
+                        vm.view<%= featureSingularName %>();
+                        break;
+                    case "app.list<%= featureSingularName %>":
+                        vm.loadAll();
+                        break;
+                    case "app.create<%= featureSingularName %>":
+                        vm.setFormFields(false);
+                        break;
+                }
+            }
         }
     }
 

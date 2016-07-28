@@ -73,6 +73,13 @@ module.exports = yeoman.generators.Base.extend({
     this.template('views/_.list.client.view.html', 'src/client/app/' + this.slugifiedName + '/views/list.html');
     this.template('views/_.view.client.view.html', 'src/client/app/' + this.slugifiedName + '/views/view.html');
 
+    // Render the ionic views
+    this.template('views/ionic/_.create.client.view.html', 'src/client/app/' + this.slugifiedName + '/views/ionic/create.html');
+    this.template('views/ionic/_.edit.client.view.html', 'src/client/app/' + this.slugifiedName + '/views/ionic/edit.html');
+    this.template('views/ionic/_.list.client.view.html', 'src/client/app/' + this.slugifiedName + '/views/ionic/list.html');
+    this.template('views/ionic/_.view.client.view.html', 'src/client/app/' + this.slugifiedName + '/views/ionic/view.html');
+    this.template('views/ionic/_.form.html', 'src/client/app/' + this.slugifiedName + '/views/ionic/form.html');
+
   }
 
 });
