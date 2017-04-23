@@ -1,0 +1,65 @@
+<!--
+  Generated template for the <%= featurePluralName %>Form pemail.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pemails and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title><%= featurePluralName %></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-slides #signupSlider pager>
+
+    <ion-slide>
+
+      <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+
+      <ion-list no-lines>
+
+        <form [formGroup]="slideOneForm">
+
+           <% var fieldLength = 0; for (var f in fieldMap) { %> 
+
+          <ion-item>
+            <ion-label floating><%= f.capitalize() %></ion-label>
+            <ion-input formControlName="<%= f %>" type="text" 
+            [(ngModel)]="user.<%= f %>"
+            [class.invalid]="!slideOneForm.controls.<%= f %>.valid && (slideOneForm.controls.<%= f %>.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="!slideOneForm.controls.<%= f %>.valid  && (slideOneForm.controls.<%= f %>.dirty || submitAttempt)">
+            <p>Please enter a valid name.</p>
+          </ion-item>
+
+          <% fieldLength = fieldLength + 1;} %> 
+
+        </form>
+
+      </ion-list>
+
+    </ion-slide>
+
+    <ion-slide>
+
+      <ion-list no-lines>
+
+        <form [formGroup]="slideTwoForm">
+
+          
+        </form>
+
+      </ion-list>
+
+      <button ion-button full color="primary" (click)="save()">Save</button>
+
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>
