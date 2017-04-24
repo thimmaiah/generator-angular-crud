@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { <%= featurePluralName %>Api } from '../../providers/<%= camelizedSingularName %>-api';
+import { <%= featureSingularName %>Api } from '../../providers/<%= slugifiedName %>-api';
 import { ResponseUtility } from '../../providers/response-utility';
-import { <%= featurePluralName %>Details } from '../<%= camelizedSingularName %>s/<%= camelizedSingularName %>-details'
+import { <%= featureSingularName %>Details } from '../<%= slugifiedName %>/<%= slugifiedName %>-details'
 
 /**
  * Generated class for the <%= featurePluralName %>s page.
@@ -12,17 +12,17 @@ import { <%= featurePluralName %>Details } from '../<%= camelizedSingularName %>
  */
 @IonicPage()
 @Component({
-  selector: 'page-<%= camelizedSingularName %>s',
-  templateUrl: '<%= camelizedSingularName %>s.html',
+  selector: 'page-<%= slugifiedName %>s',
+  templateUrl: '<%= slugifiedName %>s.html',
 })
-export class <%= featurePluralName %>s {
+export class <%= camelizedSingularName %> {
 
-  <%= camelizedSingularName %>s: any;
+  <%= camelizedPluralName %>: any;
   <%= camelizedSingularName %>: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingController: LoadingController, 
-    public <%= camelizedSingularName %>Api: <%= featurePluralName %>Api, public respUtility: ResponseUtility) {
+    public <%= camelizedSingularName %>Api: <%= featureSingularName %>Api, public respUtility: ResponseUtility) {
   }
 
   
@@ -35,10 +35,10 @@ export class <%= featurePluralName %>s {
     });
 
 
-    this.<%= camelizedSingularName %>Api.get<%= featurePluralName %>s().subscribe(
-      <%= camelizedSingularName %>s => {
-        this.<%= camelizedSingularName %>s = <%= camelizedSingularName %>s;
-        console.log("Loaded <%= camelizedSingularName %>s");
+    this.<%= camelizedSingularName %>Api.get<%= featurePluralName %>().subscribe(
+      <%= camelizedPluralName %> => {
+        this.<%= camelizedPluralName %> = <%= camelizedPluralName %>;
+        console.log("Loaded <%= camelizedPluralName %>");
       },
       error => { this.respUtility.showFailure(error); },
       () => { loader.dismiss(); }
@@ -46,17 +46,17 @@ export class <%= featurePluralName %>s {
 
   }
 
-  get<%= featurePluralName %>Details(<%= camelizedSingularName %>) {
+  get<%= featureSingularName %>Details(<%= camelizedSingularName %>) {
     let loader = this.loadingController.create({
       content: 'Loading <%= featurePluralName %>s...'
     });
 
     loader.present()
-    this.<%= camelizedSingularName %>Api.get<%= featurePluralName %>Details(<%= camelizedSingularName %>.id).subscribe(
+    this.<%= camelizedSingularName %>Api.get<%= featureSingularName %>Details(<%= camelizedSingularName %>.id).subscribe(
       <%= camelizedSingularName %> => {
         this.<%= camelizedSingularName %> = <%= camelizedSingularName %>;
         console.log("got <%= camelizedSingularName %> " + <%= camelizedSingularName %>);
-        this.navCtrl.push(<%= featurePluralName %>Details, <%= camelizedSingularName %>);
+        this.navCtrl.push(<%= featureSingularName %>Details, <%= camelizedSingularName %>);
       },
       error => { this.respUtility.showFailure(error); },
       () => { loader.dismiss(); }

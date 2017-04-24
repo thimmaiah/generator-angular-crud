@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { <%= featurePluralName %>s } from './<%= camelizedSingularName %>s';
-import { <%= featurePluralName %>Details } from './<%= camelizedSingularName %>-details';
-import { <%= featurePluralName %>Form } from './<%= camelizedSingularName %>-form';
+import { <%= featureSingularName %> } from './<%= slugifiedName %>';
+import { <%= featureSingularName %>Details } from './<%= slugifiedName %>-details';
+import { <%= featureSingularName %>Form } from './<%= slugifiedName %>-form';
 
 @NgModule({
   declarations: [
-    <%= featurePluralName %>s,
-    <%= featurePluralName %>Details,
-    <%= featurePluralName %>Form
+    <%= featureSingularName %>,
+    <%= featureSingularName %>Details,
+    <%= featureSingularName %>Form
   ],
   imports: [
-    IonicPageModule.forChild(<%= featurePluralName %>s),
-    IonicPageModule.forChild(<%= featurePluralName %>Details),
-    IonicPageModule.forChild(<%= featurePluralName %>Form)
+    IonicPageModule.forChild(<%= featureSingularName %>),
+    IonicPageModule.forChild(<%= featureSingularName %>Details),
+    IonicPageModule.forChild(<%= featureSingularName %>Form)
   ],
   exports: [
-    <%= featurePluralName %>s,
-    <%= featurePluralName %>Details,
-    <%= featurePluralName %>Form
+    <%= featureSingularName %>,
+    <%= featureSingularName %>Details,
+    <%= featureSingularName %>Form
   ]
 })
 export class <%= featurePluralName %>sModule {}

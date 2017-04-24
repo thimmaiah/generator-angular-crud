@@ -4,6 +4,7 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var _ = require('lodash');
 var inflections = require('underscore.inflections');
+var changeCase = require('change-case')
 
 
 module.exports = yeoman.generators.Base.extend({
@@ -18,20 +19,22 @@ module.exports = yeoman.generators.Base.extend({
 
     this.argument('featureName', { type: String, required: true });
     this.argument('fields', { type: String, required: false });
-	if(this.fields) {
-		// Ensure fields are captured to generate the fields inside the Table/Model
-		this.fields = this.fields.replace(/\s/g, "");
-		var f = this.fields.split(",");
-		this.fieldMap = {};
-		for (var i in f) {
-			var temp = f[i].split(":");
-			this.fieldMap[temp[0]] = temp[1];
-		}
-		console.log(this.fieldMap);
-		
-	}
+  	if(this.fields) {
+  		// Ensure fields are captured to generate the fields inside the Table/Model
+  		this.fields = this.fields.replace(/\s/g, "");
+  		var f = this.fields.split(",");
+  		this.fieldMap = {};
+      this.fieldMapPascalCase = {};
+  		for (var i in f) {
+  			var temp = f[i].split(":");
+  			this.fieldMap[temp[0]] = temp[1];
+        this.fieldMapPascalCase[temp[0]] = changeCase.titleCase(temp[0]);
+  		}
+  		console.log(this.fieldMap);
+  		
+  	}
 	
-    this.featureName = _.capitalize(this.featureName);
+    this.featureName = changeCase.pascalCase(this.featureName);
     this.featureSingularName = inflections.singularize(this.featureName);
     this.featurePluralName = inflections.pluralize(this.featureName);
 
@@ -57,7 +60,7 @@ module.exports = yeoman.generators.Base.extend({
     // Define file names
     var details = 'src/client/app/' + this.slugifiedName + '/' + this.slugifiedName + '-details';
     var form = 'src/client/app/' + this.slugifiedName + '/' + this.slugifiedName + '-form';
-    var entity = 'src/client/app/' + this.slugifiedName + '/' + this.slugifiedNamePlural;
+    var entity = 'src/client/app/' + this.slugifiedName + '/' + this.slugifiedName;
     var api = 'src/client/app/' + this.slugifiedName + '/' + this.slugifiedName + '-api';
     
     // Render angular module files

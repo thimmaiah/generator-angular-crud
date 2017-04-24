@@ -18,7 +18,7 @@
 
       <% var fieldLength = 0; for (var f in fieldMap) { %> 
       <p>
-        {{<%= camelizedSingularName %>.<%=f%>">}}
+        <%= fieldMapPascalCase[f] %>: {{<%= camelizedSingularName %>.<%=f%>}}
       </p>
       <% fieldLength = fieldLength + 1;} %>
 
@@ -28,7 +28,7 @@
   <ion-row>
 
     <ion-col>
-      <button ion-button full color="secondary" (click)="edit<%= featurePluralName %>(<%= camelizedSingularName %>)">Edit</button>
+      <button ion-button full color="secondary" (click)="edit<%= featureSingularName %>(<%= camelizedSingularName %>)">Edit</button>
     </ion-col>
     <ion-col>
       <button ion-button full color="danger" (click)="confirmDelete(<%= camelizedSingularName %>)">Delete</button>

@@ -1,7 +1,7 @@
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ViewChild } from '@angular/core';
-import { <%= featurePluralName %>Api } from '../../providers/<%= camelizedSingularName %>-api';
+import { <%= featureSingularName %>Api } from '../../providers/<%= slugifiedName %>-api';
 import { ResponseUtility } from '../../providers/response-utility';
 
 /**
@@ -12,10 +12,10 @@ import { ResponseUtility } from '../../providers/response-utility';
  */
 //@IonicPage()
 @Component({
-  selector: 'page-<%= camelizedSingularName %>-form',
-  templateUrl: '<%= camelizedSingularName %>-form.html',
+  selector: 'page-<%= slugifiedName %>-form',
+  templateUrl: '<%= slugifiedName %>-form.html',
 })
-export class <%= featurePluralName %>Form {
+export class <%= featureSingularName %>Form {
 
   <%= camelizedSingularName %>: {};
   @ViewChild('signupSlider') signupSlider: any;
@@ -28,7 +28,7 @@ export class <%= featurePluralName %>Form {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public <%= camelizedSingularName %>Api: <%= featurePluralName %>Api,
+    public <%= camelizedSingularName %>Api: <%= featureSingularName %>Api,
     public respUtility: ResponseUtility) {
 
     this.<%= camelizedSingularName %> = this.navParams.data;
@@ -71,7 +71,7 @@ export class <%= featurePluralName %>Form {
     }
     else {
       if (this.<%= camelizedSingularName %>["id"]) {
-        this.<%= camelizedSingularName %>Api.update<%= featurePluralName %>(this.<%= camelizedSingularName %>).subscribe(
+        this.<%= camelizedSingularName %>Api.update<%= featureSingularName %>(this.<%= camelizedSingularName %>).subscribe(
           <%= camelizedSingularName %> => {
             this.respUtility.showSuccess('<%= featurePluralName %> saved successfully.');
           },
@@ -80,7 +80,7 @@ export class <%= featurePluralName %>Form {
           }
         );
       } else {
-        this.<%= camelizedSingularName %>Api.create<%= featurePluralName %>(this.<%= camelizedSingularName %>).subscribe(
+        this.<%= camelizedSingularName %>Api.create<%= featureSingularName %>(this.<%= camelizedSingularName %>).subscribe(
           <%= camelizedSingularName %> => {
             this.respUtility.showSuccess('<%= featurePluralName %> saved successfully.');
           },

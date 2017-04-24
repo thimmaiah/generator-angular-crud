@@ -27,14 +27,14 @@
            <% var fieldLength = 0; for (var f in fieldMap) { %> 
 
           <ion-item>
-            <ion-label floating><%= f.capitalize() %></ion-label>
+            <ion-label floating><%= fieldMapPascalCase[f] %></ion-label>
             <ion-input formControlName="<%= f %>" type="text" 
-            [(ngModel)]="user.<%= f %>"
+            [(ngModel)]="<%= camelizedSingularName %>.<%= f %>"
             [class.invalid]="!slideOneForm.controls.<%= f %>.valid && (slideOneForm.controls.<%= f %>.dirty || submitAttempt)"></ion-input>
           </ion-item>
 
           <ion-item *ngIf="!slideOneForm.controls.<%= f %>.valid  && (slideOneForm.controls.<%= f %>.dirty || submitAttempt)">
-            <p>Please enter a valid name.</p>
+            <p>Please enter a valid <%= fieldMapPascalCase[f] %>.</p>
           </ion-item>
 
           <% fieldLength = fieldLength + 1;} %> 

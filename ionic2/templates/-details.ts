@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
-import { <%= featurePluralName %>Form } from '../<%= camelizedSingularName %>s/<%= camelizedSingularName %>-form';
-import { <%= featurePluralName %>Api } from '../../providers/<%= camelizedSingularName %>-api';
+import { <%= featureSingularName %>Form } from '../<%= slugifiedName %>/<%= slugifiedName %>-form';
+import { <%= featureSingularName %>Api } from '../../providers/<%= slugifiedName %>-api';
 import { ResponseUtility } from '../../providers/response-utility';
 /**
  * Generated class for the <%= featurePluralName %>Details page.
@@ -11,15 +11,15 @@ import { ResponseUtility } from '../../providers/response-utility';
  */
 //@IonicPage()
 @Component({
-  selector: 'page-<%= camelizedSingularName %>-details',
-  templateUrl: '<%= camelizedSingularName %>-details.html',
+  selector: 'page-<%= slugifiedName %>-details',
+  templateUrl: '<%= slugifiedName %>-details.html',
 })
-export class <%= featurePluralName %>Details {
+export class <%= featureSingularName %>Details {
 
   <%= camelizedSingularName %>: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public <%= camelizedSingularName %>Api: <%= featurePluralName %>Api,
+    public <%= camelizedSingularName %>Api: <%= featureSingularName %>Api,
     public alertController: AlertController,
     public toastController: ToastController,
     public respUtility: ResponseUtility) {
@@ -30,12 +30,12 @@ export class <%= featurePluralName %>Details {
     console.log('ionViewDidLoad <%= featurePluralName %>Details');
   }
 
-  edit<%= featurePluralName %>(<%= camelizedSingularName %>) {
-    this.navCtrl.push(<%= featurePluralName %>Form, <%= camelizedSingularName %>);
+  edit<%= featureSingularName %>(<%= camelizedSingularName %>) {
+    this.navCtrl.push(<%= featureSingularName %>Form, <%= camelizedSingularName %>);
   }
 
-  delete<%= featurePluralName %>(<%= camelizedSingularName %>) {
-    this.<%= camelizedSingularName %>Api.delete<%= featurePluralName %>(<%= camelizedSingularName %>).subscribe(
+  delete<%= featureSingularName %>(<%= camelizedSingularName %>) {
+    this.<%= camelizedSingularName %>Api.delete<%= featureSingularName %>(<%= camelizedSingularName %>).subscribe(
       response => {
         this.respUtility.showSuccess("Deleted <%= featurePluralName %>");
         this.navCtrl.pop();
@@ -47,6 +47,6 @@ export class <%= featurePluralName %>Details {
   }
 
   confirmDelete(<%= camelizedSingularName %>) {
-    this.respUtility.confirmDelete(this.delete<%= featurePluralName %>.bind(this), <%= camelizedSingularName %>);      
+    this.respUtility.confirmDelete(this.delete<%= featureSingularName %>.bind(this), <%= camelizedSingularName %>);      
   }
 }
