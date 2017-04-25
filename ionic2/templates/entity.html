@@ -19,7 +19,7 @@
     <button ion-item *ngFor="let <%= camelizedSingularName %> of <%= camelizedSingularName %>s" (click)=get<%= featureSingularName %>Details(<%= camelizedSingularName %>)>
       <% var fieldLength = 0; for (var f in fieldMap) { %> 
       <p>
-        <%= fieldMapPascalCase[f] %>: {{<%= camelizedSingularName %>.<%=f%>}}
+        <%= fieldMapTitleCase[f] %>: {{<%= camelizedSingularName %>.<%=f%>}}
       </p>
       <% fieldLength = fieldLength + 1;} %>
     </button>

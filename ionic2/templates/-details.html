@@ -14,17 +14,22 @@
 
 
 <ion-content padding>
-  <button ion-item (click)="edit<%= featurePluralName %>(<%= camelizedSingularName %>)">
 
+      <ion-list>
       <% var fieldLength = 0; for (var f in fieldMap) { %> 
-      <p>
-        <%= fieldMapPascalCase[f] %>: {{<%= camelizedSingularName %>.<%=f%>}}
-      </p>
+      <ion-item>
+        <ion-row>
+          <ion-col>
+            <%= fieldMapTitleCase[f] %>: 
+          </ion-col>
+          <ion-col>
+            {{<%= camelizedSingularName %>.<%=f%>}}
+          </ion-col>
+        </ion-row>
+      </ion-item>
       <% fieldLength = fieldLength + 1;} %>
-
+      </ion-list>
       
-    </button>
-
   <ion-row>
 
     <ion-col>

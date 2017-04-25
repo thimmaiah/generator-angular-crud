@@ -24,11 +24,11 @@ module.exports = yeoman.generators.Base.extend({
   		this.fields = this.fields.replace(/\s/g, "");
   		var f = this.fields.split(",");
   		this.fieldMap = {};
-      this.fieldMapPascalCase = {};
+      this.fieldMapTitleCase = {};
   		for (var i in f) {
   			var temp = f[i].split(":");
   			this.fieldMap[temp[0]] = temp[1];
-        this.fieldMapPascalCase[temp[0]] = changeCase.titleCase(temp[0]);
+        this.fieldMapTitleCase[temp[0]] = changeCase.titleCase(temp[0]);
   		}
   		console.log(this.fieldMap);
   		
